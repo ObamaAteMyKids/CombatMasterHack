@@ -23,9 +23,6 @@ void PlayerESP::GetBoundingBox(PlayerRoot* player, Box& box)
 
 void PlayerESP::OnRender()
 {
-	if (PlayerUIManager::GetMyPlayer() == nullptr)
-		Hooks::Game::allPlayers.clear();
-
 	if (!Menu::Vars::esp)
 		return;
 
