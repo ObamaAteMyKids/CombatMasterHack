@@ -1,4 +1,6 @@
 #include "../../Includes.hpp"
+#define RADPI 57.295779513082f
+
 
 void Aimbot::OnTick()
 {
@@ -10,6 +12,9 @@ void Aimbot::OnTick()
 		return;
 	}
 
+	if (Hooks::Game::localPlayer->GetPlayerHealth()->GetIsDead())
+		return;
+
 	if (Hooks::Game::allPlayers.empty())
 		return;
 
@@ -18,6 +23,7 @@ void Aimbot::OnTick()
 
 	auto localPos = Hooks::Game::localPlayer->GetFPSPivot()->GetPosition();
 	auto localForward = Hooks::Game::localPlayer->GetFPSPivot()->GetForward();
+	auto localAngles = Hooks::Game::localPlayer->GetFPSPivot()->GetEulerAngles();
 
 	for (const auto currentPlayer : Hooks::Game::allPlayers) {
 		if (!currentPlayer)
@@ -29,12 +35,14 @@ void Aimbot::OnTick()
 		Vector3D enemyPos = currentPlayer->GetTransform()->GetPosition() + currentPlayer->GetHeadHitbox()->GetHitboxCenter();
 		Vector3D direction = enemyPos - localPos;
 
-		MyQuaternion targetRotation = UnityEngine::Quaternion::LookRotation(direction);
-		MyQuaternion aimAngle = UnityEngine::Quaternion::RotateTowards(Hooks::Game::localPlayer->GetFPSPivot()->GetRotation(), 
-			                    targetRotation, UnityEngine::Time::GetDeltaTime() * 1000.f);
+		Vector3D aimAngle = UnityEngine::Quaternion::LookRotation(direction.Normalized()).GetEulerAngles();
 
-		Hooks::Game::localPlayer->GetFPSPivot()->SetRotation(aimAngle);
-		//currently rotates camera also gets overridden in multiplayer, still works for auto guns since the server doesnt fix it instantly
+		if (aimAngle.x > 180.f)
+			aimAngle.y -= 360.f;
+
+		aimAngle.z = localAngles.z;
+
+		Hooks::Game::localPlayer->GetFPSPivot()->SetEulerAngles(aimAngle);
 	}
 }
 

@@ -234,6 +234,35 @@ namespace UnityEngine
 		}
 	};
 
+	class Quaternion
+	{
+	public:
+		CLASS("UnityEngine", "Quaternion");
+
+		float x;
+		float y;
+		float z;
+		float w;
+
+		static Quaternion LookRotation(Vector3D forward)
+		{
+			METHOD(Quaternion(**)(Vector3D), LookRotation);
+			return LookRotation(forward);
+		}
+
+		static Quaternion RotateTowards(Quaternion from, Quaternion to, float maxDegreesDelta)
+		{
+			METHOD(Quaternion(**)(Quaternion, Quaternion, float), RotateTowards);
+			return RotateTowards(from, to, maxDegreesDelta);
+		}
+
+		Vector3D GetEulerAngles()
+		{
+			METHOD(Vector3D(**)(Quaternion*), get_eulerAngles);
+			return get_eulerAngles(this);
+		}
+	};
+
 	class Transform
 	{
 	public:
@@ -281,15 +310,15 @@ namespace UnityEngine
 			set_eulerAngles(this, eulerAngles);
 		}
 
-		MyQuaternion GetRotation()
+		Quaternion GetRotation()
 		{
-			METHOD(MyQuaternion(**) (Transform*), get_rotation);
+			METHOD(Quaternion(**) (Transform*), get_rotation);
 			return get_rotation(this);
 		}
 
-		void SetRotation(MyQuaternion rotation)
+		void SetRotation(Quaternion rotation)
 		{
-			METHOD(void(**)(Transform*, MyQuaternion), set_rotation);
+			METHOD(void(**)(Transform*, Quaternion), set_rotation);
 			set_rotation(this, rotation);
 		}
 
@@ -313,20 +342,20 @@ namespace UnityEngine
 	};
 
 	class Component;
-	class GameObject : public Transform 
+	class GameObject : public Transform
 	{
 	public:
 		CLASS("UnityEngine", "GameObject");
 
-		Transform* GetTransform() 
+		Transform* GetTransform()
 		{
-			METHOD(Transform*(**)(GameObject*), get_transform);
+			METHOD(Transform * (**)(GameObject*), get_transform);
 			return get_transform(this);
 		}
 
-		Component* AddComponent(Type* componentType) 
+		Component* AddComponent(Type* componentType)
 		{
-			METHOD(Component*(**)(GameObject*, Type*), AddComponent);
+			METHOD(Component * (**)(GameObject*, Type*), AddComponent);
 			return AddComponent(this, componentType);
 		}
 	};
@@ -335,34 +364,16 @@ namespace UnityEngine
 	public:
 		CLASS("UnityEngine", "Component");
 
-		GameObject* GetGameObject() 
+		GameObject* GetGameObject()
 		{
-			METHOD(GameObject*(**)(Component*), get_gameObject);
+			METHOD(GameObject * (**)(Component*), get_gameObject);
 			return get_gameObject(this);
 		}
 
-		Transform* GetTransform() 
+		Transform* GetTransform()
 		{
-			METHOD(Transform*(**)(Component*), get_transform);
+			METHOD(Transform * (**)(Component*), get_transform);
 			return get_transform(this);
-		}
-	};
-
-	class Quaternion
-	{
-	public:
-		CLASS("UnityEngine", "Quaternion");
-
-		static MyQuaternion LookRotation(Vector3D forward)
-		{
-			METHOD(MyQuaternion(**)(Vector3D), LookRotation);
-			return LookRotation(forward);
-		}
-
-		static MyQuaternion RotateTowards(MyQuaternion from, MyQuaternion to, float maxDegreesDelta)
-		{
-			METHOD(MyQuaternion(**)(MyQuaternion, MyQuaternion, float), RotateTowards);
-			return RotateTowards(from, to, maxDegreesDelta);
 		}
 	};
 

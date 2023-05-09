@@ -187,7 +187,6 @@
     <ClInclude Include="SDK\Game\PlayerCommand.hpp" />
     <ClInclude Include="SDK\Game\PlayerRoot.hpp" />
     <ClInclude Include="SDK\Game\WeaponBase.hpp" />
-    <ClInclude Include="SDK\Quaternion.hpp" />
     <ClInclude Include="SDK\UnityEngine.hpp" />
     <ClInclude Include="SDK\Vector.hpp" />
     <ClInclude Include="Util\crt.hpp" />

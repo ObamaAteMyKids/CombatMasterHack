@@ -155,8 +155,5 @@
     <ClInclude Include="Features\Aimbot\Aimbot.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDK\Quaternion.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>

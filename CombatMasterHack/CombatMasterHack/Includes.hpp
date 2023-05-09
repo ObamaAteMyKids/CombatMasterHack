@@ -17,7 +17,6 @@
 inline bool once = false;
 
 #include "SDK/Vector.hpp"
-#include "SDK/Quaternion.hpp"
 
 #include "Hooks/minhook/minhook.h"
 #include "Util/crt.hpp"

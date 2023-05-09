@@ -1,5 +1,20 @@
 #pragma once
 
+constexpr auto radPi = 3.14159265358979323846;
+constexpr auto degPi = 180.0;
+
+template<typename T>
+T ToRadians(T degrees)
+{
+	return (degrees * (static_cast<T>(radPi) / static_cast<T>(degPi)));
+}
+
+template<typename T>
+T ToDegrees(T radians)
+{
+	return (radians * (static_cast<T>(degPi) / static_cast<T>(radPi)));
+}
+
 class Vector2D 
 {
 public:
@@ -125,6 +140,46 @@ public:
 		return false;
 	}
 
+	bool operator<(const Vector2D& v)
+	{
+		return x < v.x && y < v.y;
+	}
+
+	bool operator>(const Vector2D& v)
+	{
+		return x > v.x && y > v.y;
+	}
+
+	bool operator<=(const Vector2D& v)
+	{
+		return x <= v.x && y <= v.y;
+	}
+
+	bool operator>=(const Vector2D& v)
+	{
+		return x >= v.x && y >= v.y;
+	}
+
+	bool operator<(const float& v)
+	{
+		return x < v && y < v;
+	}
+
+	bool operator>(const float& v)
+	{
+		return x > v && y > v;
+	}
+
+	bool operator<=(const float& v)
+	{
+		return x <= v && y <= v;
+	}
+
+	bool operator>=(const float& v)
+	{
+		return x >= v && y >= v;
+	}
+
 	void Abs() 
 	{
 		x = abs(x);
@@ -148,12 +203,12 @@ public:
 
 	float Magnitude() 
 	{
-		return sqrt(this->x * this->x + this->y * this->y);
+		return sqrt(x * x + y * y);
 	}
 
 	float Magnitude2D() 
 	{
-		return sqrt(this->x * this->x);
+		return sqrt(x * x);
 	}
 
 	Vector2D Normalized() const 
@@ -306,6 +361,46 @@ public:
 		return false;
 	}
 
+	bool operator<(const Vector3D& v)
+	{
+		return x < v.x && y < v.y && z < v.z;
+	}
+
+	bool operator>(const Vector3D& v)
+	{
+		return x > v.x && y > v.y && z > v.z;
+	}
+
+	bool operator<=(const Vector3D& v)
+	{
+		return x <= v.x && y <= v.y && z <= v.z;
+	}
+
+	bool operator>=(const Vector3D& v)
+	{
+		return x >= v.x && y >= v.y && z >= v.z;
+	}
+
+	bool operator<(const float& v)
+	{
+		return x < v && y < v && z < v;
+	}
+
+	bool operator>(const float& v)
+	{
+		return x > v && y > v && z > v;
+	}
+
+	bool operator<=(const float& v)
+	{
+		return x <= v && y <= v && z <= v;
+	}
+
+	bool operator>=(const float& v)
+	{
+		return x >= v && y >= v && z >= v;
+	}
+
 	void Abs()
 	{
 		x = abs(x);
@@ -338,19 +433,30 @@ public:
 		return (*this - vInput).Length2D();
 	}
 
-	inline float Dot(const Vector3D& Vec2)
+	inline float Dot(const Vector3D& vec2)
 	{
-		return this->x * Vec2.x + this->y * Vec2.y + this->z * Vec2.z;
+		return x * vec2.x + y * vec2.y + z * vec2.z;
+	}
+
+	inline Vector3D Cross(const Vector3D& vec2)
+	{
+		Vector3D result;
+
+		result.x = y * vec2.z - z * vec2.y;
+		result.y = z * vec2.x - x * vec2.z;
+		result.z = x * vec2.y - y * vec2.x;
+
+		return result;
 	}
 
 	float Magnitude() 
 	{
-		return sqrt(this->x * this->x + this->y * this->y + this->z * this->z);
+		return sqrt(x * x + y * y + z * z);
 	}
 
 	float Magnitude2D() 
 	{
-		return sqrt(this->x * this->x + this->z * this->z);
+		return sqrt(x * x + z * z);
 	}
 
 	Vector3D Normalized() const 
